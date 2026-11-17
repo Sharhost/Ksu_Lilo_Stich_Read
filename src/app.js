@@ -2,6 +2,7 @@
 import { loadState, loadSettings, queueSave, saveSettings, defaultState, flushSave } from './storage.js';
 import * as audio from './audio.js';
 import { line } from './content/lines.js';
+import { spriteURL, preloadSprites, startBlinking } from './sprites.js';
 
 export let S = null;
 export const settings = loadSettings();
@@ -69,16 +70,30 @@ export function charSVG(who, mood = 'normal') {
     <path d="M50 8 q5 -8 10 0" stroke="#2f6fd0" stroke-width="4" fill="none"/>
   </svg>`;
 }
+const MOOD_POSE = { normal: 'idle', happy: 'idle', cheer: 'jump', think: 'coconut', surf: 'surf' };
 export function charEl(who, mood = 'normal') {
-  const el = h('div', 'char sway', charSVG(who, mood));
+  const el = h('div', 'char sway', charSVG(who, mood)); // SVG — мгновенная заглушка
   el.dataset.who = who;
+  const pose = MOOD_POSE[mood] || 'idle';
+  el.dataset.pose = pose;
+  spriteURL(who, pose).then(url => {
+    if (url && el.dataset.pose === pose) el.innerHTML = '<img src="' + url + '" alt="">';
+  });
   return el;
 }
 export function setMood(who, mood) {
-  document.querySelectorAll(`.char[data-who="${who}"]`).forEach(el => {
-    el.innerHTML = charSVG(who, mood);
+  document.querySelectorAll('.char[data-who="' + who + '"]').forEach(el => {
+    let pose = MOOD_POSE[mood] || 'idle';
+    if (pose === 'coconut' && who === 'stitch') pose = 'idle';
+    if (pose === 'surf' && who === 'lilo') pose = 'idle';
+    el.dataset.pose = pose;
     el.classList.remove('cheer');
-    if (mood === 'cheer' || mood === 'happy') { void el.offsetWidth; el.classList.add('cheer'); }
+    spriteURL(who, pose).then(url => {
+      if (el.dataset.pose !== pose) return;
+      if (url) el.innerHTML = '<img src="' + url + '" alt="">';
+      else el.innerHTML = charSVG(who, mood);
+      if (mood === 'cheer' || mood === 'happy') { void el.offsetWidth; el.classList.add('cheer'); }
+    });
   });
 }
 
@@ -243,6 +258,8 @@ export function nav(name, params) { currentScreen = name; _go(name, params); }
 async function boot() {
   S = await loadState();
   applyBodyModes();
+  preloadSprites();
+  startBlinking();
   const { mountMap } = await import('./screens/map.js');
   const { mountLevel } = await import('./screens/level.js');
   const { mountAlbum } = await import('./screens/album.js');
