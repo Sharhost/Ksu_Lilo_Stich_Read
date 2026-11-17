@@ -37,6 +37,7 @@ export function grantLevelRewards(zone, level, acc) {
   const za = S.progress.zoneAcc[zone] || { ok: 0, n: 0 };
   za.ok += acc; za.n += 1;
   S.progress.zoneAcc[zone] = za;
+  checkCollectionMedals();
   save();
   return { shells, sticker, dupShells, firstPass, xp: Math.round(8 + acc * 12) };
 }
