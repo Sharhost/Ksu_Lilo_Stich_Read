@@ -1,4 +1,4 @@
-name: Generate voice
+name: Generate voice 
 on:
   workflow_dispatch:
 
