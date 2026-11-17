@@ -53,3 +53,17 @@ export const OUTFITS = [
   { id: 'o9', emoji: '🦪', name: 'Жемчужное ожерелье', xp: 650 },
   { id: 'o10', emoji: '🌈', name: 'Радужный плащ', xp: 800 }
 ];
+
+/* Коллекционные медали: альбом, леи, тексты, остров */
+export function checkCollectionMedals() {
+  const got = [];
+  const award = (id, cond) => {
+    if (cond && !S.medals.includes(id)) { S.medals.push(id); got.push(id); }
+  };
+  award('album60', Object.keys(S.stickers).length >= 60);
+  award('lei50', S.lei >= 50);
+  award('texts15', S.textsRead.length >= 15);
+  award('island20', S.island.length >= 20);
+  if (got.length) save();
+  return got;
+}
