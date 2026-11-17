@@ -1,6 +1,7 @@
 /* Слоговый сёрфинг: волна-слог плывёт к Стичу, прочитай — и он перепрыгнет.
    Волна ждёт ответа: таймера-провала нет. */
 import { h, charSVG, sparkle } from '../app.js';
+import { spriteURL } from '../sprites.js';
 
 export function mount(field, ctx) {
   let i = 0;
@@ -14,6 +15,7 @@ export function mount(field, ctx) {
 
     const sea = h('div', 'sea');
     const surfer = h('div', 'surfer', charSVG('stitch', 'happy'));
+    spriteURL('stitch', 'surf').then(url => { if (url) surfer.innerHTML = '<img src="' + url + '" style="width:100%" alt="">'; });
     const wave = h('div', 'wave');
     wave.append(h('div', 'sylcard', item.text));
     sea.append(surfer, wave);
