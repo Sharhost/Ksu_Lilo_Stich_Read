@@ -1,5 +1,5 @@
 /* Service worker: полный офлайн, stale-while-revalidate, безопасное обновление */
-const VERSION = 'ksusha-v1.1.0';
+const VERSION = 'ksusha-v1.1.1';
 const SHELL = [
   './', './index.html', './manifest.webmanifest', './styles/main.css',
   './styles/skin.css',
