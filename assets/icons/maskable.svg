@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0fb5ba"/>
+  <circle cx="256" cy="256" r="150" fill="#fffdf7"/>
+  <path d="M130 300 q42 -26 84 0 t84 0 t84 0 v56 a150 150 0 0 1 -252 0z" fill="#3fb7bd"/>
+  <text x="256" y="270" text-anchor="middle" font-family="sans-serif" font-size="96" font-weight="bold" fill="#0a7f83">ма</text>
+  <circle cx="330" cy="170" r="30" fill="#ffb347"/>
+  <circle cx="185" cy="345" r="22" fill="#8a5a2b"/>
+</svg>
