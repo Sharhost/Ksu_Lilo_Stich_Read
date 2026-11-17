@@ -1,0 +1,16 @@
+{
+  "name": "Ксюша, Лило и Стич: учимся читать",
+  "short_name": "Учимся читать",
+  "description": "Тренажёр чтения вслух с сюжетом: от слияния слога до 40 слов в минуту.",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0fb5ba",
+  "background_color": "#fff7e6",
+  "icons": [
+    { "src": "assets/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/icons/maskable.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
