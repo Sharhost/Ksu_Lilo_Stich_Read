@@ -59,6 +59,8 @@ export function mountLevel(root, { zone, level }) {
   const total = Array.isArray(tasks) ? tasks.length : (game === 'mill' ? 25 : game === 'swim' ? 10 : 5);
 
   const scr = h('div', 'screen');
+   scr.classList.add('scene');
+  scr.style.backgroundImage = 'url(assets/scenes/zone' + zone + '.jpg)';
   scr.append(topbar(`${z.emoji} ${z.name} · ${level}`, 0));
   const combo = h('div', 'combo'); const comboFill = h('i'); combo.append(comboFill);
   scr.append(combo);
