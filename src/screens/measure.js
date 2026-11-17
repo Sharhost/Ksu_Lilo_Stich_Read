@@ -12,7 +12,7 @@ export function mountMeasure(root) {
   const total = wordCount(text.text);
   let words = 0, errors = 0, seconds = 0, timer = null, running = false, stopped = false;
 
-  const info = h('div', '', `Незнакомый текст · ${total} слов. Нажимайте на каждое прочитанное слово. Запинка — кнопка «➖». Ребёнок читает вслух 60 секунд.`));
+  const info = h('div', '', 'Незнакомый текст · ' + total + ' слов. Нажимайте на каждое прочитанное слово. Запинка — кнопка «➖». Ребёнок читает вслух 60 секунд.');
   const box = renderText(text.text, { arcs: false, colors: false, stress: false });
   const stat = h('div', 'counters', '📖 0 · ➖ 0 · ⏱️ 60');
   const bar = h('div', 'timerbar'); const fill = h('i'); fill.style.width = '100%'; bar.append(fill);
@@ -33,7 +33,7 @@ export function mountMeasure(root) {
   const bStart = btn('▶️ Старт', () => {
     if (running || stopped) return;
     running = true; bStart.disabled = true;
-    if (S && audio.isRecording()) audio.stopRecording();
+    if (audio.isRecording()) audio.stopRecording();
     audio.startRecording();
     timer = setInterval(() => {
       seconds++;
@@ -47,7 +47,8 @@ export function mountMeasure(root) {
   row.append(bStart, bErr, bStop);
 
   function update() {
-    stat.innerHTML = `📖 ${words} · ➖ ${errors} · ⏱️ ${Math.max(0, 60 - seconds)} · <b>${wpm(words, errors, seconds)} сл/мин</b>`;
+    stat.innerHTML = '📖 ' + words + ' · ➖ ' + errors + ' · ⏱️ ' + Math.max(0, 60 - seconds)
+      + ' · <b>' + wpm(words, errors, seconds) + ' сл/мин</b>';
   }
 
   function stop() {
@@ -58,7 +59,7 @@ export function mountMeasure(root) {
       saveMeasurement({ wpm: speed, words, errors, seconds, textId: text.id, comp });
       const medals = checkSpeedMedals();
       sparkle(scr, 30); audio.sfx('reward');
-      toast(`Записано: ${speed} сл/мин, понимание ${comp}/2.` + (medals.length ? ' 🏅 Новая медаль!' : ''), null, null, 8000);
+      toast('Записано: ' + speed + ' сл/мин, понимание ' + comp + '/2.' + (medals.length ? ' 🏅 Новая медаль!' : ''), null, null, 8000);
       if (S.goal) nav('finale'); else nav('parent');
     });
   }
